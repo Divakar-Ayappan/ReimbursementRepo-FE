@@ -1,0 +1,17 @@
+.mainlayout {
+    display: flex;
+    min-height: 100vh;
+
+}
+
+.mainlayout_maincontent {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-color: #f5f5f5;
+}
+
+.mainloayout_mainpage{
+    flex: 1;
+    padding: 1%;
+}

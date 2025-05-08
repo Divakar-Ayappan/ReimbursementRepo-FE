@@ -1,0 +1,63 @@
+.card {
+    /*border: 1px solid black;*/
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    /*box-shadow: 1px 1px 1px 1px grey;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+}
+
+.card_topSection {
+    padding: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card_dateSection {
+    padding: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card_AmtSection {
+    padding: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_pendingWithSection {
+    justify-content: center;
+    padding: 2.5%;
+    display: flex;
+}
+
+.card_pendingWithSection_text {
+
+}
+
+.card_pendingWithSection_person {
+    padding-left: 10px;
+    font-weight: bolder;
+}
+
+.cardDateText{
+    font-weight: 750;
+    padding-left: 3.5px;
+}
+
+.date_labelText {
+    display: flex;
+}
+
+.card_amountText {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.card_topSection_categoryText {
+    font-weight: bold;
+    font-size: 20px;
+}

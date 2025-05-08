@@ -1,0 +1,90 @@
+.form {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: auto;
+    font-family: system-ui, sans-serif;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.inputGroup label {
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+}
+
+.inputGroup textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.checkboxGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.cancelButton {
+    padding: 10px 16px;
+    border: 1px solid #d1d5db;
+    background: white;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.submitButton {
+    padding: 10px 16px;
+    background: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.submitButton:hover {
+    background-color: #1e293b;
+}
+
+.helperText {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 4px;
+}

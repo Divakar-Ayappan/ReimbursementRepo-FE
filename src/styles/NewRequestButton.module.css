@@ -1,0 +1,28 @@
+.newRequestButton {
+    display: flex;
+    /*justify-content: space-between;*/
+    height: 40%;
+    width: 8%;
+    border-radius: 7.5px;
+    background-color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.newRequestButton:hover{
+    background-color: #252525;
+}
+
+.plusIcon {
+    padding-top: 8.5%;
+    color: white;
+    font-size: 150%;
+}
+
+.newRequestButtonText{
+    padding-top: 11.5%;
+    padding-left: 5%;
+    color: white;
+    font-weight: bold;
+}
