@@ -1,19 +1,19 @@
 import styles from '../../styles/RulesCard.module.css'
 
-function RulesCard() {
+function RulesCard({ rule }) {
     return (
         <div className={styles.rulesCard}>
             <div className={styles.rulesCard_topSection}>
                 <div className={styles.rulesCard_categoryText}>
-                    Category
+                    {rule.ruleCategory}
                 </div>
                 <div className={styles.rulesCard_amtText}>
-                    ₹Amt
+                    ₹{rule.reimbursementLimit}
                 </div>
             </div>
 
             <div className={styles.rulesCard_description}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                {rule.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
             </div>
         </div>
     );

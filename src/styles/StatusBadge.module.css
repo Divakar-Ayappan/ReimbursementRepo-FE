@@ -1,6 +1,18 @@
-.statusBadge{
-    background-color: #f3f35b;
+.statusBadge {
     border-radius: 20px;
     padding: 7.5px;
     font-weight: bold;
+    color: black;
+}
+
+.statusAPPROVED {
+    background-color: #b2f3b2;
+}
+
+.statusPENDING {
+    background-color: #f3f35b;
+}
+
+.statusREJECTED {
+    background-color: #f3a5a5;
 }

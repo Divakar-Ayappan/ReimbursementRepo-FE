@@ -1,0 +1,99 @@
+/*Open animation*/
+
+.rulesPage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modalOverlayOpen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(2.5px); /*Blur effect and its strength */
+    background-color: rgba(0, 0, 0, 0.2); /* soft dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalOverlayClosed {
+    composes: modalOverlayOpen;
+    opacity: 0;
+}
+
+.modalContentOpen {
+    background-color: #fff;/*Actual color or the outer side of the form*/
+    border-radius: 16px;
+    padding: 2%;
+    max-width: 37.5%;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    outline: none;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.modalContentClosed {
+    composes: modalContentOpen;
+    transform: translateY(40px);
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/*Close Animation*/
+.rulesPage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Overlay fade */
+.modalOverlayOpen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+    z-index: 1000;
+}
+
+.modalOverlayClosed {
+    composes: modalOverlayOpen;
+    opacity: 0;
+}
+
+/* Modal content animations */
+.modalContentOpen {
+    background-color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 300ms ease, opacity 300ms ease;
+}
+
+.modalContentClosed {
+    composes: modalContentOpen;
+    transform: translateY(40px);
+    opacity: 0;
+}

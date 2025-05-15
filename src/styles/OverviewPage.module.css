@@ -1,0 +1,5 @@
+.overViewPage{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7.5rem;
+}

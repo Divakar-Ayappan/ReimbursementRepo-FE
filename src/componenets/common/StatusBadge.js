@@ -1,9 +1,9 @@
 import styles from '../../styles/StatusBadge.module.css'
 
-function StatusBadge() {
+function StatusBadge({status}) {
     return (
-        <div className={styles.statusBadge}>
-            STATUS
+        <div className={`${styles.statusBadge} ${styles[`status${status}`]}`}>
+            {status}
         </div>
     );
 }
