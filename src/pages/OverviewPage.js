@@ -1,24 +1,31 @@
 import DisplayCard from "../componenets/common/DisplayCard";
 import {useOutletContext} from "react-router-dom";
 import styles from "../styles/OverviewPage.module.css";
-import {useQuery} from "@tanstack/react-query";
-import {createReimbursementRequest, getAllRequestsByEmployee} from "../api/requestApis";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import {createReimbursementRequest, getAllRequestsByEmployee, getAllRules} from "../api/requestApis";
 import {toast} from "react-toastify";
 import PageWithModal from "../modals/PageWithModal";
-import { useQueryClient } from '@tanstack/react-query';
 
 function OverviewPage() {
-    const { isOpen, setIsOpen } = useOutletContext()
+    const {isOpen, setIsOpen} = useOutletContext()
     const queryClient = useQueryClient();
 
-    const { data, isLoading, error } = useQuery({
-        queryKey: ['requests', { rulesFilter: "ACTIVE" }],
+    const {data: requests, isLoading, error} = useQuery({
+        queryKey: ['requests', {rulesFilter: "ACTIVE"}],
         queryFn: () => getAllRequestsByEmployee('8eb8f758-d146-4098-9524-a0a7d53b5024'),
         onError: () => toast.error('Failed to load rules'),
     });
+
+    const {data: rules} = useQuery({
+        queryKey: ['rules', {rulesFilter: "ACTIVE"}],
+        queryFn: () => getAllRules({rulesFilter: "ACTIVE"}),
+        onError: () => toast.error('Failed to load rules'),
+
+    });
+
     if (isLoading) return <p>Loading requests...</p>;
     if (error) return <p>Error loading requests</p>;
-    if (!data || data.length === 0) return <p>No rules available</p>;
+    if (!requests || requests.length === 0) return <p>No requests available</p>;
 
     const handleFormSubmit = async (formData) => {
         console.log("submit");
@@ -35,14 +42,14 @@ function OverviewPage() {
 
 
     return (
-        <PageWithModal isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleFormSubmit}>
+        <PageWithModal isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleFormSubmit} rules={rules}>
             <div className={styles.overViewPage}>
-                {data.map(request => (
+                {requests.map(request => (
                     <DisplayCard key={request.requestId} request={request}/>
                 ))}
             </div>
         </PageWithModal>
-);
+    );
 }
 
 export default OverviewPage;

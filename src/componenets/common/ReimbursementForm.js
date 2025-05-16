@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styles from '../../styles/ReimbursementForm.module.css';
 
-export default function ReimbursementForm({ onSubmit, setIsOpen }) {
+export default function ReimbursementForm({onSubmit, setIsOpen, rules}) {
     const [formData, setFormData] = useState({
         employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
         fromDate: '',
@@ -15,8 +15,8 @@ export default function ReimbursementForm({ onSubmit, setIsOpen }) {
 
     // Handle change for normal inputs
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const {name, value} = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
     };
 
     // Special handler for claimedDates (add one date at a time)
@@ -80,8 +80,9 @@ export default function ReimbursementForm({ onSubmit, setIsOpen }) {
                     required
                 >
                     <option value="">Select a category</option>
-                    <option value="TRAVEL">Travel</option>
-                    <option value="FOOD">Food</option>
+                    {rules && rules.map(rules => (
+                        <option key={rules.ruleCategory} value={rules.ruleCategory}>{rules.ruleCategory}</option>
+                    ))}
                 </select>
             </div>
 

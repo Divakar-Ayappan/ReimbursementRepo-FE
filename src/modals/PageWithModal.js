@@ -2,7 +2,7 @@ import Modal from "react-modal";
 import styles from "../styles/PageModal.module.css";
 import ReimbursementForm from "../componenets/common/ReimbursementForm";
 
-function PageWithModal({ isOpen, setIsOpen, children , onSubmit }) {
+function PageWithModal({ isOpen, setIsOpen, children , onSubmit, rules }) {
     return (
         <div className={styles.pageWrapper}>
             {children}
@@ -14,7 +14,7 @@ function PageWithModal({ isOpen, setIsOpen, children , onSubmit }) {
                 closeTimeoutMS={300}
                 ariaHideApp={false}
             >
-                <ReimbursementForm setIsOpen={setIsOpen} onSubmit={onSubmit} />
+                <ReimbursementForm setIsOpen={setIsOpen} onSubmit={onSubmit} rules={rules} />
             </Modal>
         </div>
     );
