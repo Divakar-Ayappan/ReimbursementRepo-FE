@@ -1,8 +1,7 @@
 .newRequestButton {
     display: flex;
-    /*justify-content: space-between;*/
-    height: 40%;
-    width: 8%;
+    align-items: center;
+    padding: 0.5rem 1rem;
     border-radius: 7.5px;
     background-color: black;
     cursor: pointer;
@@ -10,19 +9,17 @@
     border: none;
 }
 
-.newRequestButton:hover{
+.newRequestButton:hover {
     background-color: #252525;
 }
 
 .plusIcon {
-    padding-top: 8.5%;
     color: white;
-    font-size: 150%;
+    font-size: 1.5rem;
 }
 
-.newRequestButtonText{
-    padding-top: 11.5%;
-    padding-left: 5%;
+.newRequestButtonText {
+    margin-left: 0.5rem;
     color: white;
     font-weight: bold;
 }
