@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../../styles/ReimbursementForm.module.css';
+import {convertISOToSmallDate} from "../../utils/Utils.js";
 
-export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees}) {
-    const [formData, setFormData] = useState({
+export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, employees, formDataProps, formOpeningMode}) {
+
+    const initialFormData = {
         employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
         fromDate: '',
         toDate: '',
@@ -11,8 +13,29 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees
         attachmentUrl: '',
         claimedDates: [],
         comment: '',
-        beneficiaryEmployeeIds: [] // ✅ Add this line
-    });
+        beneficiaryEmployeeIds: []
+    };
+
+    const [formData, setFormData] = useState(initialFormData);
+
+    useEffect(() => {
+        if (formOpeningMode === 'EDIT' && formDataProps) {
+            setFormData({
+                employeeId: formDataProps.employeeId || '',
+                fromDate: formDataProps.fromDate || '',
+                toDate: formDataProps.toDate || '',
+                ruleCategory: formDataProps.ruleCategory || '',
+                amount: formDataProps.amount || 0,
+                attachmentUrl: formDataProps.attachmentUrl || '',
+                claimedDates: formDataProps.claimedDates || [],
+                comment: formDataProps.comment || '',
+                beneficiaryEmployeeIds: formDataProps.beneficiaryEmployeeIds || []
+            });
+        } else {
+            setFormData(initialFormData);
+            console.log(formData.amount)
+        }
+    }, [formDataProps, formOpeningMode, initialFormData]);
 
     // Handle change for normal inputs
     const handleChange = (e) => {
@@ -45,10 +68,12 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees
         onSubmit(formData);
     };
 
-    console.log("Emp: ", employees);
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
-            <h2 className={styles.title}>New Reimbursement Request</h2>
+
+            {formDataProps
+                ? <h2 className={styles.title}>Edit Reimbursement Request</h2>
+                : <h2 className={styles.title}>New Reimbursement Request</h2>}
 
             <div className={styles.row}>
                 <div className={styles.inputGroup}>
@@ -122,13 +147,13 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees
                             <li key={id} className={styles.multiSelectItem}>
                                 {emp.firstName} {emp.lastName}
                                 <button className={styles.removeMultiSelectedItemX}
-                                    type="button"
-                                    onClick={() => {
-                                        setFormData(prev => ({
-                                            ...prev,
-                                            beneficiaryEmployeeIds: prev.beneficiaryEmployeeIds.filter(eid => eid !== id)
-                                        }));
-                                    }}
+                                        type="button"
+                                        onClick={() => {
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                beneficiaryEmployeeIds: prev.beneficiaryEmployeeIds.filter(eid => eid !== id)
+                                            }));
+                                        }}
                                 >
                                     &times;
                                 </button>
@@ -173,13 +198,9 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees
 
                 <ul className={styles.multiSelectList}>
                     {formData.claimedDates.map(date => {
-                        const formatted = new Date(date).toLocaleDateString('en-US', {
-                            day: '2-digit',
-                            month: 'short',
-                        });
                         return (
                             <li key={date} className={styles.multiSelectItem}>
-                                {formatted}
+                                {convertISOToSmallDate(date)}
                                 <button
                                     type="button"
                                     onClick={() => handleRemoveClaimedDate(date)}
@@ -207,14 +228,21 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees
             <div className={styles.actions}>
                 <button
                     type="button"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsRFormOpen(false)}
                     className={styles.cancelButton}
                 >
                     Cancel
                 </button>
-                <button type="submit" className={styles.submitButton}>
-                    Create Request
-                </button>
+                {
+                    formDataProps
+                        ? <button type="submit" className={styles.submitButton}>
+                            Edit Request
+                        </button>
+                        : <button type="submit" className={styles.submitButton}>
+                            Create Request
+                        </button>
+                }
+
             </div>
         </form>
     );

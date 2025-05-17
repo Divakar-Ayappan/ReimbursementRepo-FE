@@ -1,0 +1,9 @@
+.multiItemCard {
+    width: fit-content;
+    background-color: var(--grey-background);
+    /*border: 1px solid #d1d5db;*/
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 0.90rem;
+    font-weight: 500;
+}

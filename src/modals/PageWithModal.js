@@ -2,19 +2,41 @@ import Modal from "react-modal";
 import styles from "../styles/PageModal.module.css";
 import ReimbursementForm from "../componenets/common/ReimbursementForm";
 
-function PageWithModal({ isOpen, setIsOpen, children , onSubmit, rules , employees}) {
+function PageWithModal({
+                           isRFormOpen,
+                           setIsRFormOpen,
+                           children,
+                           onSubmit,
+                           rules,
+                           employees,
+                           formDataProps,
+                           formOpeningMode,
+                           setFormOpeningMode,
+                       }) {
     return (
         <div className={styles.pageWrapper}>
             {children}
             <Modal
-                isOpen={isOpen}
-                onRequestClose={() => setIsOpen(false)}
+                isOpen={isRFormOpen}
+                onRequestClose={() => {
+                    setIsRFormOpen(false);
+                    setFormOpeningMode('');
+                }
+                }
                 className={styles.modalContent}
                 overlayClassName={styles.modalOverlay}
                 closeTimeoutMS={300}
                 ariaHideApp={false}
             >
-                <ReimbursementForm setIsOpen={setIsOpen} onSubmit={onSubmit} rules={rules} employees={employees} />
+                <ReimbursementForm
+                    formDataProps={formDataProps}
+                    setIsRFormOpen={setIsRFormOpen}
+                    onSubmit={onSubmit}
+                    rules={rules}
+                    employees={employees}
+                    formOpeningMode={formOpeningMode}
+                />
+
             </Modal>
         </div>
     );

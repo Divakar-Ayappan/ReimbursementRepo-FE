@@ -5,10 +5,16 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {createReimbursementRequest, getAllEmployees, getAllRequestsByEmployee, getAllRules} from "../api/requestApis";
 import {toast} from "react-toastify";
 import PageWithModal from "../modals/PageWithModal";
+import {useState} from "react";
+import RDetailsModal from "../modals/RDetailsModal";
 
 function OverviewPage() {
-    const {isOpen, setIsOpen} = useOutletContext()
+    const {isRFormOpen, setIsRFormOpen} = useOutletContext();
     const queryClient = useQueryClient();
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [formDataProps, setFormDataProps] = useState(null);
+    const [formOpeningMode, setFormOpeningMode] = useState('');
+
 
     const {data: requests, isLoading, error} = useQuery({
         queryKey: ['requests'],
@@ -29,7 +35,7 @@ function OverviewPage() {
         onError: () => toast.error('Failed to load rules'),
     });
 
-    console.log(employees)
+    console.log(requests)
 
     if (isLoading) return <p>Loading requests...</p>;
     if (error) return <p>Error loading requests</p>;
@@ -41,7 +47,7 @@ function OverviewPage() {
             console.log(formData)
             await createReimbursementRequest(formData);
             toast.success("Request submitted");
-            setIsOpen(false);
+            setIsRFormOpen(false);
             queryClient.invalidateQueries(['requests']);
         } catch (err) {
             toast.error("Failed to submit request");
@@ -50,12 +56,23 @@ function OverviewPage() {
 
 
     return (
-        <PageWithModal isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleFormSubmit} rules={rules} employees={employees}>
+        <PageWithModal isRFormOpen={isRFormOpen} setIsRFormOpen={setIsRFormOpen}
+                       onSubmit={handleFormSubmit} rules={rules} employees={employees}
+                       formDataProps={formDataProps} formOpeningMode={formOpeningMode}
+                       setFormOpeningMode={setFormOpeningMode}>
             <div className={styles.overViewPage}>
                 {requests.map(request => (
-                    <DisplayCard key={request.requestId} request={request}/>
+                    <DisplayCard key={request.requestId} request={request} onClick={()=>setSelectedRequest(request)}/>
                 ))}
             </div>
+            <RDetailsModal
+                isOpen={selectedRequest}
+                rDetailsCardClose={() => setSelectedRequest(null)}
+                request={selectedRequest}
+                setIsRFormOpen={setIsRFormOpen}
+                setFormDataProps={setFormDataProps}
+                setFormOpeningMode={setFormOpeningMode}
+            />
         </PageWithModal>
     );
 }

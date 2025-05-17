@@ -6,15 +6,15 @@ import {useState} from "react";
 
 function MainLayout() {
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isRFormOpen, setIsRFormOpen] = useState(false)
 
     return (
         <div className={style.mainlayout}>
             <Sidebar />
             <div className={style.mainlayout_maincontent}>
-                <TopBar setIsOpen={setIsOpen} />
+                <TopBar setIsRFormOpen={setIsRFormOpen} />
                 <div className={style.mainloayout_mainpage}>
-                    <Outlet context={{ isOpen, setIsOpen }} />
+                    <Outlet context={{ isRFormOpen, setIsRFormOpen }} />
                 </div>
             </div>
 

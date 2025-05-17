@@ -9,6 +9,10 @@
     background-color: white;
 }
 
+.card:hover {
+    cursor: pointer;
+}
+
 .card_topSection {
     padding: 5%;
     display: flex;
@@ -43,7 +47,7 @@
     font-weight: bolder;
 }
 
-.cardDateText{
+.cardDateText {
     font-weight: 750;
     padding-left: 3.5px;
 }

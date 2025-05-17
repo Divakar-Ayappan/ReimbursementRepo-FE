@@ -1,9 +1,9 @@
 import styles from '../../styles/DisplayCard.module.css'
 import StatusBadge from "./StatusBadge";
 
-function DisplayCard({request}) {
+function DisplayCard({request, onClick}) {
     return (
-        <div className={styles.card}>
+        <div onClick={onClick} className={styles.card}>
             <div className={styles.card_topSection}>
                 <div className={styles.card_topSection_categoryText}> Category</div>
                 <StatusBadge status={request.status}/>

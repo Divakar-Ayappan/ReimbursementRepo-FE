@@ -1,0 +1,197 @@
+
+.rDetailsCard {
+    background: white;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rDetailsCardTopSection {
+    /*width: 90%;*/
+    display: flex;
+    justify-content: space-between;
+}
+
+.removeButton {
+    border: none;
+    background: none;
+}
+
+.xIcon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: stroke 0.2s ease;
+}
+
+.xIcon:hover {
+    color: var(--red-close);
+}
+
+.rDetailsCardCategoryStatusSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rDetailsCardCategoryText {
+    font-weight: bold;
+}
+
+.rDetailsCardStatusBadge {
+    transform: scale(0.75);
+    transform-origin: top center;
+}
+
+.rDetailsFromToDateSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rDetailsFromToDate {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.rDetailsFromToDateText {
+    font-weight: 600;
+}
+
+.rDetailsCardCardAmtSection {
+    width: 100%;
+    display: flex;
+    align-items: end;
+}
+
+.rDetailsCardCardAmtSymbol {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
+}
+
+.rDetailsCardCardAmtText {
+    margin-right: 5px;
+    font-weight: 600;
+    font-size: large;
+}
+
+.rDetailsCardCardAmtValue {
+    font-weight: 900;
+}
+
+.rDetailsCardClaimedDatesSection {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+}
+
+.rDetailsCardClaimedDatesText {
+    font-weight: bolder;
+}
+
+.rDetailsCardClaimedDatesContainer {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.rDetailsCardEmployeesSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rDetailsCardEmployeesText {
+    font-weight: bolder;
+}
+
+.rDetailsCardEmployeesContainer {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.rDetailsCardAttachmentSection {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.rDetailsCardAttachmentText {
+    font-weight: 500;
+}
+
+.rDetailsCardAttachmentLink a {
+    font-weight: 500;
+    text-decoration: none;
+    color: #1d4ed8;
+}
+
+.rDetailsCardAttachmentLink a:hover {
+    text-decoration: underline;
+}
+
+.rDetailsCardCommentSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rDetailsCardCommentText {
+    font-weight: bolder;
+}
+
+.rDetailsCardComment {
+    border-radius: 5px;
+    background-color: var(--grey-background);
+    padding: 12px 12px;
+}
+
+.rDetailsCardCreatedAtSection {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.rDetailsCardCreatedAtText {
+    font-size: 15px;
+}
+
+.rDetailsCardCreatedAtDate {
+    font-size: 15px;
+}
+
+.rDetailsCardBottomSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rDetailsCardEditRequestButton {
+    padding: 10px 16px;
+    /*background: #0f172a;*/
+    /*color: white;*/
+    border-radius: 8px;
+    font-weight: 600;
+    /*font-size: 15px;*/
+    cursor: pointer;
+    border: 2px solid black;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.rDetailsCardEditRequestButton:hover {
+    background-color: #404040;
+    color: white;
+}
+
+.rDetailsCardCancelRequestButton {
+    padding: 10px 16px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #fb5252;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.rDetailsCardCancelRequestButton:hover{
+    background-color: #f81b1b;
+}

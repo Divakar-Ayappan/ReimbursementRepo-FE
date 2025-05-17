@@ -2,6 +2,7 @@ import {Route, Routes} from 'react-router-dom';
 import MainLayout from './componenets/layout/MainLayout';
 import OverviewPage from './pages/OverviewPage';
 import RulesPage from './pages/RulesPage';
+import '../src/styles/variable.css'
 
 function App() {
     return (
