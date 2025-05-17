@@ -8,3 +8,6 @@ export const getAllRules = (params = {}) =>
 
 export const createReimbursementRequest = (formData) =>
     http.post('/request', formData);
+
+export const getAllEmployees = () =>
+    http.get(`/employee`)

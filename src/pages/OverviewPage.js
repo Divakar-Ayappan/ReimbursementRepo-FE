@@ -2,7 +2,7 @@ import DisplayCard from "../componenets/common/DisplayCard";
 import {useOutletContext} from "react-router-dom";
 import styles from "../styles/OverviewPage.module.css";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {createReimbursementRequest, getAllRequestsByEmployee, getAllRules} from "../api/requestApis";
+import {createReimbursementRequest, getAllEmployees, getAllRequestsByEmployee, getAllRules} from "../api/requestApis";
 import {toast} from "react-toastify";
 import PageWithModal from "../modals/PageWithModal";
 
@@ -11,7 +11,7 @@ function OverviewPage() {
     const queryClient = useQueryClient();
 
     const {data: requests, isLoading, error} = useQuery({
-        queryKey: ['requests', {rulesFilter: "ACTIVE"}],
+        queryKey: ['requests'],
         queryFn: () => getAllRequestsByEmployee('8eb8f758-d146-4098-9524-a0a7d53b5024'),
         onError: () => toast.error('Failed to load rules'),
     });
@@ -22,6 +22,14 @@ function OverviewPage() {
         onError: () => toast.error('Failed to load rules'),
 
     });
+
+    const {data: employees} = useQuery({
+        queryKey: ['employees',],
+        queryFn: () => getAllEmployees(),
+        onError: () => toast.error('Failed to load rules'),
+    });
+
+    console.log(employees)
 
     if (isLoading) return <p>Loading requests...</p>;
     if (error) return <p>Error loading requests</p>;
@@ -42,7 +50,7 @@ function OverviewPage() {
 
 
     return (
-        <PageWithModal isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleFormSubmit} rules={rules}>
+        <PageWithModal isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleFormSubmit} rules={rules} employees={employees}>
             <div className={styles.overViewPage}>
                 {requests.map(request => (
                     <DisplayCard key={request.requestId} request={request}/>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from '../../styles/ReimbursementForm.module.css';
 
-export default function ReimbursementForm({onSubmit, setIsOpen, rules}) {
+export default function ReimbursementForm({onSubmit, setIsOpen, rules, employees}) {
     const [formData, setFormData] = useState({
         employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
         fromDate: '',
@@ -11,6 +11,7 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules}) {
         attachmentUrl: '',
         claimedDates: [],
         comment: '',
+        beneficiaryEmployeeIds: [] // ✅ Add this line
     });
 
     // Handle change for normal inputs
@@ -44,6 +45,7 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules}) {
         onSubmit(formData);
     };
 
+    console.log("Emp: ", employees);
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
             <h2 className={styles.title}>New Reimbursement Request</h2>
@@ -87,6 +89,57 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules}) {
             </div>
 
             <div className={styles.inputGroup}>
+                <label>Beneficiaries</label>
+                <select
+                    name="employees"
+                    onChange={(e) => {
+                        const selectedId = e.target.value;
+                        if (!selectedId) return;
+                        setFormData(prev => {
+                            if (prev.beneficiaryEmployeeIds?.includes(selectedId)) return prev;
+                            return {
+                                ...prev,
+                                beneficiaryEmployeeIds: [...(prev.beneficiaryEmployeeIds || []), selectedId]
+                            };
+                        });
+                        e.target.value = '';
+                    }}
+                    defaultValue=""
+                >
+                    <option value="">Select employee</option>
+                    {employees?.map(emp => (
+                        <option key={emp.employeeId} value={emp.employeeId}>
+                            {emp.firstName} {emp.lastName}
+                        </option>
+                    ))}
+                </select>
+
+                <ul className={styles.multiSelectList}>
+                    {formData.beneficiaryEmployeeIds?.map(id => {
+                        const emp = employees.find(e => e.employeeId === id);
+                        if (!emp) return null;
+                        return (
+                            <li key={id} className={styles.multiSelectItem}>
+                                {emp.firstName} {emp.lastName}
+                                <button className={styles.removeMultiSelectedItemX}
+                                    type="button"
+                                    onClick={() => {
+                                        setFormData(prev => ({
+                                            ...prev,
+                                            beneficiaryEmployeeIds: prev.beneficiaryEmployeeIds.filter(eid => eid !== id)
+                                        }));
+                                    }}
+                                >
+                                    &times;
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+
+
+            <div className={styles.inputGroup}>
                 <label>Amount ($)</label>
                 <input
                     type="number"
@@ -118,20 +171,27 @@ export default function ReimbursementForm({onSubmit, setIsOpen, rules}) {
                 />
                 <small className={styles.helperText}>Select dates one by one if multiple</small>
 
-                <ul className={styles.claimedDatesList}>
-                    {formData.claimedDates.map(date => (
-                        <li key={date} className={styles.claimedDateItem}>
-                            {date}{' '}
-                            <button
-                                type="button"
-                                onClick={() => handleRemoveClaimedDate(date)}
-                                className={styles.removeDateButton}
-                            >
-                                &times;
-                            </button>
-                        </li>
-                    ))}
+                <ul className={styles.multiSelectList}>
+                    {formData.claimedDates.map(date => {
+                        const formatted = new Date(date).toLocaleDateString('en-US', {
+                            day: '2-digit',
+                            month: 'short',
+                        });
+                        return (
+                            <li key={date} className={styles.multiSelectItem}>
+                                {formatted}
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveClaimedDate(date)}
+                                    className={styles.removeMultiSelectedItemX}
+                                >
+                                    &times;
+                                </button>
+                            </li>
+                        );
+                    })}
                 </ul>
+
             </div>
 
             <div className={styles.inputGroup}>
