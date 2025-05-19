@@ -1,12 +1,13 @@
 import Sidebar from './Sidebar';
-import { Outlet } from 'react-router-dom';
-import style from '../../styles/MainLayout.module.css'
-import TopBar from "./TopBar";
-import {useState} from "react";
+import TopBar from './TopBar';
+import { useState } from 'react';
+import style from '../../styles/MainLayout.module.css';
+import AnimatedOutlet from '../layout/AnimationOutlet';
 
 function MainLayout() {
+    const [isRFormOpen, setIsRFormOpen] = useState(false);
 
-    const [isRFormOpen, setIsRFormOpen] = useState(false)
+    const outletContext = { isRFormOpen, setIsRFormOpen };
 
     return (
         <div className={style.mainlayout}>
@@ -14,10 +15,9 @@ function MainLayout() {
             <div className={style.mainlayout_maincontent}>
                 <TopBar setIsRFormOpen={setIsRFormOpen} />
                 <div className={style.mainloayout_mainpage}>
-                    <Outlet context={{ isRFormOpen, setIsRFormOpen }} />
+                    <AnimatedOutlet context={outletContext} />
                 </div>
             </div>
-
         </div>
     );
 }
