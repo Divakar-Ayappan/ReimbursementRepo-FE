@@ -5,7 +5,7 @@ import {convertISOToLongDate, convertISOToSmallDate} from "../../utils/Utils.js"
 import React from "react";
 import MultiItemsCard from "./MultiItemsCard";
 
-function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, rDetailsCardClose, setFormOpeningMode}) {
+function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, rDetailsCardClose, setFormOpeningMode, handleCancelRequest}) {
 
     return (
         <div className={styles.rDetailsCard}>
@@ -79,7 +79,7 @@ function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, r
 
             <div className={styles.rDetailsCardBottomSection}>
                 <button onClick={()=> {setIsRFormOpen(true); setFormDataProps(rDetails); setFormOpeningMode('EDIT')}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
-                <button onClick={rDetailsCardClose} type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
+                <button onClick={()=> {handleCancelRequest(rDetails.requestId); rDetailsCardClose(); } } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
             </div>
         </div>
     );

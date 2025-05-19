@@ -14,3 +14,6 @@ export const editReimbursementRequest = (requestId, formData) =>
 
 export const getAllEmployees = () =>
     http.get(`/employee`)
+
+export const cancelRequest = (requestId) =>
+    http.delete(`/request/${requestId}`)

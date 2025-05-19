@@ -3,6 +3,7 @@ import {useOutletContext} from "react-router-dom";
 import styles from "../styles/OverviewPage.module.css";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {
+    cancelRequest,
     createReimbursementRequest,
     editReimbursementRequest,
     getAllEmployees,
@@ -61,6 +62,12 @@ function OverviewPage() {
         }
     };
 
+    const handleCancelRequest = async (requestId) => {
+        await cancelRequest(requestId);
+        setSelectedRequest(null);
+        toast.success("Request cancelled successfully!")
+    }
+
 
     return (
         <PageWithModal isRFormOpen={isRFormOpen} setIsRFormOpen={setIsRFormOpen}
@@ -79,6 +86,7 @@ function OverviewPage() {
                 setIsRFormOpen={setIsRFormOpen}
                 setFormDataProps={setFormDataProps}
                 setFormOpeningMode={setFormOpeningMode}
+                handleCancelRequest={handleCancelRequest}
             />
         </PageWithModal>
     );

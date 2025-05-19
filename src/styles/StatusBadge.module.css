@@ -16,3 +16,7 @@
 .statusREJECTED {
     background-color: #f3a5a5;
 }
+
+.statusCANCELLED {
+    background-color: #afafaf;
+}

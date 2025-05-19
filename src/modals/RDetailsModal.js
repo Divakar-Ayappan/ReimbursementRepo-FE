@@ -3,7 +3,7 @@ import styles from "../styles/DetailsModal.module.css";
 import {X} from "lucide-react";
 import ReimbursementDetailsCard from "../componenets/common/ReimbursementDetailsCard";
 
-function RDetailsModal({isOpen, rDetailsCardClose, request, setIsRFormOpen, setFormDataProps, setFormOpeningMode}) {
+function RDetailsModal({isOpen, rDetailsCardClose, request, setIsRFormOpen, setFormDataProps, setFormOpeningMode, handleCancelRequest}) {
     if (!isOpen) return null;
 
     const handleContentClick = (e) => {
@@ -22,6 +22,7 @@ function RDetailsModal({isOpen, rDetailsCardClose, request, setIsRFormOpen, setF
                     setIsRFormOpen={setIsRFormOpen}
                     setFormDataProps={setFormDataProps}
                     setFormOpeningMode={setFormOpeningMode}
+                    handleCancelRequest={handleCancelRequest}
                 />
             </div>
         </div>

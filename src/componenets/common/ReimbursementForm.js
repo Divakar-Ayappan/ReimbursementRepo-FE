@@ -34,7 +34,7 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
         } else {
             setFormData(initialFormData);
         }
-    }, [formDataProps, formOpeningMode]);
+    }, [formData.employeeId, formDataProps, formOpeningMode]);
 
     // Handle change for normal inputs
     const handleChange = (e) => {
