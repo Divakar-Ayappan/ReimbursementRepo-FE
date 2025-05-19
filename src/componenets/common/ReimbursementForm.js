@@ -2,40 +2,39 @@ import React, {useEffect, useState} from 'react';
 import styles from '../../styles/ReimbursementForm.module.css';
 import {convertISOToSmallDate} from "../../utils/Utils.js";
 
-export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, employees, formDataProps, formOpeningMode}) {
+const initialFormData = {
+    employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
+    fromDate: '',
+    toDate: '',
+    ruleCategory: '',
+    amount: 0,
+    attachment: '',
+    claimedDates: [],
+    commentByRequester: '',
+    employees: []
+};
 
-    const initialFormData = {
-        employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
-        fromDate: '',
-        toDate: '',
-        ruleCategory: '',
-        amount: 0,
-        attachmentUrl: '',
-        claimedDates: [],
-        comment: '',
-        beneficiaryEmployeeIds: []
-    };
+export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, employees, formDataProps, formOpeningMode}) {
 
     const [formData, setFormData] = useState(initialFormData);
 
     useEffect(() => {
         if (formOpeningMode === 'EDIT' && formDataProps) {
             setFormData({
-                employeeId: formDataProps.employeeId || '',
+                employeeId: formData.employeeId || '',
                 fromDate: formDataProps.fromDate || '',
                 toDate: formDataProps.toDate || '',
                 ruleCategory: formDataProps.ruleCategory || '',
                 amount: formDataProps.amount || 0,
-                attachmentUrl: formDataProps.attachmentUrl || '',
+                attachment: formDataProps.attachment || '',
                 claimedDates: formDataProps.claimedDates || [],
-                comment: formDataProps.comment || '',
-                beneficiaryEmployeeIds: formDataProps.beneficiaryEmployeeIds || []
+                commentByRequester: formDataProps.commentByRequester || '',
+                employees: formDataProps.employees || []
             });
         } else {
             setFormData(initialFormData);
-            console.log(formData.amount)
         }
-    }, [formDataProps, formOpeningMode, initialFormData]);
+    }, [formDataProps, formOpeningMode]);
 
     // Handle change for normal inputs
     const handleChange = (e) => {
@@ -65,13 +64,13 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);
+        onSubmit( formData, formOpeningMode);
     };
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
 
-            {formDataProps
+            {formOpeningMode === 'EDIT'
                 ? <h2 className={styles.title}>Edit Reimbursement Request</h2>
                 : <h2 className={styles.title}>New Reimbursement Request</h2>}
 
@@ -121,10 +120,10 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                         const selectedId = e.target.value;
                         if (!selectedId) return;
                         setFormData(prev => {
-                            if (prev.beneficiaryEmployeeIds?.includes(selectedId)) return prev;
+                            if (prev.employees?.includes(selectedId)) return prev;
                             return {
                                 ...prev,
-                                beneficiaryEmployeeIds: [...(prev.beneficiaryEmployeeIds || []), selectedId]
+                                employees: [...(prev.employees || []), selectedId]
                             };
                         });
                         e.target.value = '';
@@ -140,7 +139,7 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                 </select>
 
                 <ul className={styles.multiSelectList}>
-                    {formData.beneficiaryEmployeeIds?.map(id => {
+                    {formData.employees?.map(id => {
                         const emp = employees.find(e => e.employeeId === id);
                         if (!emp) return null;
                         return (
@@ -151,7 +150,7 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                                         onClick={() => {
                                             setFormData(prev => ({
                                                 ...prev,
-                                                beneficiaryEmployeeIds: prev.beneficiaryEmployeeIds.filter(eid => eid !== id)
+                                                employees: prev.employees.filter(eid => eid !== id)
                                             }));
                                         }}
                                 >
@@ -172,7 +171,6 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                     value={formData.amount}
                     onChange={handleChange}
                     min="0"
-                    step="0.01"
                     required
                 />
             </div>
@@ -181,9 +179,9 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                 <label>Attachment URL</label>
                 <input
                     type="url"
-                    name="attachmentUrl"
+                    name="attachment"
                     placeholder="https://"
-                    value={formData.attachmentUrl}
+                    value={formData.attachment}
                     onChange={handleChange}
                 />
             </div>
@@ -218,9 +216,9 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
             <div className={styles.inputGroup}>
                 <label>Comment</label>
                 <textarea
-                    name="comment"
+                    name="commentByRequester"
                     placeholder="Add any additional details or comments here..."
-                    value={formData.comment}
+                    value={formData.commentByRequester}
                     onChange={handleChange}
                 />
             </div>
@@ -234,7 +232,7 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                     Cancel
                 </button>
                 {
-                    formDataProps
+                    formOpeningMode === 'EDIT'
                         ? <button type="submit" className={styles.submitButton}>
                             Edit Request
                         </button>
@@ -242,7 +240,6 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                             Create Request
                         </button>
                 }
-
             </div>
         </form>
     );

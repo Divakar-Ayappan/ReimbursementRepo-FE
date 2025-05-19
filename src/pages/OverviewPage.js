@@ -2,7 +2,13 @@ import DisplayCard from "../componenets/common/DisplayCard";
 import {useOutletContext} from "react-router-dom";
 import styles from "../styles/OverviewPage.module.css";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {createReimbursementRequest, getAllEmployees, getAllRequestsByEmployee, getAllRules} from "../api/requestApis";
+import {
+    createReimbursementRequest,
+    editReimbursementRequest,
+    getAllEmployees,
+    getAllRequestsByEmployee,
+    getAllRules
+} from "../api/requestApis";
 import {toast} from "react-toastify";
 import PageWithModal from "../modals/PageWithModal";
 import {useState} from "react";
@@ -35,17 +41,18 @@ function OverviewPage() {
         onError: () => toast.error('Failed to load rules'),
     });
 
-    console.log(requests)
 
     if (isLoading) return <p>Loading requests...</p>;
     if (error) return <p>Error loading requests</p>;
     if (!requests || requests.length === 0) return <p>No requests available</p>;
 
-    const handleFormSubmit = async (formData) => {
-        console.log("submit");
+    const handleFormSubmit = async (formData, formOpeningMode) => {
         try {
-            console.log(formData)
-            await createReimbursementRequest(formData);
+            if(formOpeningMode === 'EDIT') {
+                await editReimbursementRequest(selectedRequest.requestId, formData);
+            } else {
+                await createReimbursementRequest(formData);
+            }
             toast.success("Request submitted");
             setIsRFormOpen(false);
             queryClient.invalidateQueries(['requests']);

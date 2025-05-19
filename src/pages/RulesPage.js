@@ -11,9 +11,7 @@ function RulesPage() {
     const queryClient = useQueryClient();
 
     const handleFormSubmit = async (formData) => {
-        console.log("submit");
         try {
-            console.log(formData)
             await createReimbursementRequest(formData);
             toast.success("Request submitted");
             setIsOpen(false);
