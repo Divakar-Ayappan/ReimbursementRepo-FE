@@ -37,7 +37,7 @@ function OverviewPage() {
     });
 
     const {data: employees} = useQuery({
-        queryKey: ['employees',],
+        queryKey: ['employees'],
         queryFn: () => getAllEmployees(),
         onError: () => toast.error('Failed to load rules'),
     });
