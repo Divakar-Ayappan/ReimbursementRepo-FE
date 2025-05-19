@@ -1,0 +1,125 @@
+.loginContainer {
+    display: flex;
+    height: 100vh;
+    font-family: "Arial", sans-serif;
+}
+
+.loginForm {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.formSection {
+    max-width: 400px;
+    margin: auto;
+}
+
+.logo {
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.illustration {
+    width: 75%;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #2c2c2c;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    color: #2c2c2c;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #5c4efc;
+}
+
+.inputError {
+    border-color: red;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.errorText {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.loginButton {
+    background-color: #5c4efc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+    background-color: #4c3eea;
+}
+
+.loginButton:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.imageSection {
+    flex: 1;
+    background-color: #ece8fd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageSection img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.passwordWrapper {
+    position: relative;
+}
+
+.togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}

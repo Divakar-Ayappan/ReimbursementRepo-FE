@@ -17,3 +17,6 @@ export const getAllEmployees = () =>
 
 export const cancelRequest = (requestId) =>
     http.delete(`/request/${requestId}`)
+
+export const loginUser = (loginRequest) =>
+    http.post(`/auth/login`, loginRequest)
