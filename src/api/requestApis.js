@@ -1,7 +1,7 @@
 import http from './httpClient';
 
-export const getAllRequestsByEmployee = (employeeId, params = {}) =>
-    http.get(`/request/employee/${employeeId}`, {params});
+export const getAllRequestsByEmployee = ( params = {}) =>
+    http.get(`/request/employee`);
 
 export const getAllRules = (params = {}) =>
     http.get(`/rules`, { params });

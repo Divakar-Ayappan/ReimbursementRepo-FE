@@ -25,7 +25,7 @@ function OverviewPage() {
 
     const {data: requests, isLoading, error} = useQuery({
         queryKey: ['requests'],
-        queryFn: () => getAllRequestsByEmployee('8eb8f758-d146-4098-9524-a0a7d53b5024'),
+        queryFn: () => getAllRequestsByEmployee(),
         onError: () => toast.error('Failed to load rules'),
     });
 

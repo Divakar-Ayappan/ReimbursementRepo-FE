@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import {JWT_COOKIE_NAME} from "../commons/Constants";
 
 const ProtectedRoute = () => {
-    const token = localStorage.getItem("jwtToken");
+    const token = localStorage.getItem(JWT_COOKIE_NAME);
 
     if (!token) {
         return <Navigate to="/login" replace />;
