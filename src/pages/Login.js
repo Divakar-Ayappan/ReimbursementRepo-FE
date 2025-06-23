@@ -44,7 +44,7 @@ const Login = () => {
                 const response = await loginUser({ email, password });
 
                 if (response.status === "SUCCESSFUL") {
-                    localStorage.setItem(JWT_COOKIE_NAME, response.token);
+                    sessionStorage.setItem(JWT_COOKIE_NAME, response.token);
                     navigate("/overview");
                 } else {
                     setPasswordError("Invalid credentials");
