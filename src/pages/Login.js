@@ -45,6 +45,7 @@ const Login = () => {
 
                 if (response.status === "SUCCESSFUL") {
                     sessionStorage.setItem(JWT_COOKIE_NAME, response.token);
+                    sessionStorage.setItem('user', JSON.stringify(response));
                     navigate("/overview");
                 } else {
                     setPasswordError("Invalid credentials");
