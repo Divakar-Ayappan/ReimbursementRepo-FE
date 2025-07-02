@@ -4,7 +4,7 @@ import Logo from "../assets/Divum logo.svg";
 import ReimbursementImage from "../assets/Reimbusment image.png";
 import {useNavigate} from "react-router-dom";
 import {loginUser} from "../api/requestApis";
-import {JWT_COOKIE_NAME} from "../commons/Constants";
+import {USER_DETAILS_NAME} from "../commons/Constants";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -44,8 +44,7 @@ const Login = () => {
                 const response = await loginUser({ email, password });
 
                 if (response.status === "SUCCESSFUL") {
-                    sessionStorage.setItem(JWT_COOKIE_NAME, response.token);
-                    sessionStorage.setItem('user', JSON.stringify(response));
+                    sessionStorage.setItem(USER_DETAILS_NAME, JSON.stringify(response));
                     navigate("/overview");
                 } else {
                     setPasswordError("Invalid credentials");
