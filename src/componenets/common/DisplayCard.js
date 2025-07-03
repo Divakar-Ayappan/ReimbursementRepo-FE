@@ -1,7 +1,12 @@
 import styles from '../../styles/DisplayCard.module.css'
 import StatusBadge from "./StatusBadge";
+import {USER_DETAILS_NAME} from "../../commons/Constants";
 
 function DisplayCard({request, onClick}) {
+
+    const userDetails = JSON.parse(sessionStorage.getItem(USER_DETAILS_NAME));
+    const role = userDetails?.role;
+
     return (
         <div onClick={onClick} className={styles.card}>
             <div className={styles.card_topSection}>
@@ -24,12 +29,15 @@ function DisplayCard({request, onClick}) {
                     Created: <div className={styles.cardDateText}> {request.createdAt}</div>
                 </div>
             </div>
-            <div className={styles.card_pendingWithSection}>
-                <div className={styles.card_pendingWithSection_text}> Pending with: </div>
-                <div className={styles.card_pendingWithSection_person}>
-                    {request.pendingWith}
+
+            {role === 'EMPLOYEE' &&
+                <div className={styles.card_pendingWithSection}>
+                    <div className={styles.card_pendingWithSection_text}> Pending with:</div>
+                    <div className={styles.card_pendingWithSection_person}>
+                        {request.pendingWith}
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     );
 }

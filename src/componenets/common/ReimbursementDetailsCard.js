@@ -4,8 +4,12 @@ import StatusBadge from "./StatusBadge";
 import {convertISOToLongDate, convertISOToSmallDate} from "../../utils/Utils.js";
 import React from "react";
 import MultiItemsCard from "./MultiItemsCard";
+import {USER_DETAILS_NAME} from "../../commons/Constants";
 
-function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, rDetailsCardClose, setFormOpeningMode, handleCancelRequest}) {
+function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, rDetailsCardClose, setFormOpeningMode, handleCancelRequest, handleRejectRequest}) {
+
+    const userDetails = JSON.parse(sessionStorage.getItem(USER_DETAILS_NAME));
+    const role = userDetails?.role;
 
     return (
         <div className={styles.rDetailsCard}>
@@ -44,8 +48,14 @@ function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, r
                 </div>
             </div>
 
+            {role !== 'EMPLOYEE' &&
+                <div className={styles.rDetailsCardEmployeeSection}>
+                    <div> Requested by: </div> <div>{rDetails.employeeId.slice(0, 15)}</div>
+                </div>
+            }
+
             {rDetails.employees[0] && <div className={styles.rDetailsCardEmployeesSection}>
-                <div className={styles.rDetailsCardEmployeesText}> Employees:</div>
+                <div className={styles.rDetailsCardEmployeesText}> Claimed for:</div>
                 <div className={styles.rDetailsCardEmployeesContainer}>
                     {rDetails.employees.map(employee => (
                         <MultiItemsCard key={employee} data={employee.slice(0, 15)}/>
@@ -77,10 +87,19 @@ function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, r
                 <div className={styles.rDetailsCardCreatedAtDate}> {convertISOToLongDate(rDetails.createdAt)} </div>
             </div>
 
-            <div className={styles.rDetailsCardBottomSection}>
-                <button onClick={()=> {setIsRFormOpen(true); setFormDataProps(rDetails); setFormOpeningMode('EDIT')}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
-                <button onClick={()=> {handleCancelRequest(rDetails.requestId); rDetailsCardClose(); } } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
-            </div>
+            {role === 'EMPLOYEE' &&
+                <div className={styles.rDetailsCardBottomSection}>
+                    <button onClick={()=> {setIsRFormOpen(true); setFormDataProps(rDetails); setFormOpeningMode('EDIT')}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
+                    <button onClick={()=> {handleCancelRequest(rDetails.requestId); rDetailsCardClose(); } } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
+                </div>
+            }
+
+            {role !== 'EMPLOYEE' &&
+                <div className={styles.rDetailsCardBottomSection}>
+                    <button onClick={()=> {rDetailsCardClose();}} type="submit" className={styles.rDetailsCardApproveRequestButton}>Approve Request</button>
+                    <button onClick={()=> {handleRejectRequest(rDetails.requestId);} } type="submit" className={styles.rDetailsCardRejectRequestButton}>Reject Request</button>
+                </div>
+            }
         </div>
     );
 }

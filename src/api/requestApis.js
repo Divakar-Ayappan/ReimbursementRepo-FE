@@ -20,3 +20,9 @@ export const cancelRequest = (requestId) =>
 
 export const loginUser = (loginRequest) =>
     http.post(`/auth/login`, loginRequest)
+
+export const getRequestsForActioner = () =>
+    http.get('/request/actioner')
+
+export const rejectRequest = (requestId, actionData) =>
+    http.post(`request/actions/${requestId}`, actionData)

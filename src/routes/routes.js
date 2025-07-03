@@ -4,6 +4,7 @@ import MainLayout from "../componenets/layout/MainLayout";
 import OverviewPage from "../pages/OverviewPage";
 import {Navigate} from "react-router-dom";
 import RulesPage from "../pages/RulesPage";
+import ManagePage from "../pages/ManagePage";
 
 export const appRoutes = [
     {
@@ -35,6 +36,14 @@ export const appRoutes = [
                     {
                         path: "rules",
                         element: <RulesPage />
+                    },
+                    {
+                        path: "manage",
+                        element: (
+                            <ProtectedRoute allowedRoles={['ADMIN', 'MANAGER']}>
+                                <ManagePage />
+                            </ProtectedRoute>
+                        )
                     }
                 ]
             }

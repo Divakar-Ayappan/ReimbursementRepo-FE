@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from '../../styles/ReimbursementForm.module.css';
 import {convertISOToSmallDate} from "../../utils/Utils.js";
+import CommentTextArea from "./CommentTextArea";
 
 const initialFormData = {
     employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
@@ -213,15 +214,11 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
 
             </div>
 
-            <div className={styles.inputGroup}>
-                <label>Comment</label>
-                <textarea
-                    name="commentByRequester"
-                    placeholder="Add any additional details or comments here..."
-                    value={formData.commentByRequester}
-                    onChange={handleChange}
-                />
-            </div>
+            <CommentTextArea
+                name={'commentByRequester'}
+                value={formData.commentByRequester}
+                handleChange={handleChange}
+            />
 
             <div className={styles.actions}>
                 <button

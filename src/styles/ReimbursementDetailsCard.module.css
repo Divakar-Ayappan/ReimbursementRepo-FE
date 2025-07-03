@@ -95,6 +95,12 @@
     justify-content: space-between;
 }
 
+.rDetailsCardEmployeeSection {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
 .rDetailsCardEmployeesSection {
     display: flex;
     flex-direction: column;
@@ -193,5 +199,36 @@
 }
 
 .rDetailsCardCancelRequestButton:hover{
+    background-color: #f81b1b;
+}
+
+.rDetailsCardApproveRequestButton {
+    padding: 10px 16px;
+    background: #31c100;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    /*font-size: 15px;*/
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none;
+}
+
+.rDetailsCardApproveRequestButton:hover {
+    background-color: #2cb100;
+}
+
+.rDetailsCardRejectRequestButton {
+    padding: 10px 16px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #fb5252;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.rDetailsCardRejectRequestButton:hover{
     background-color: #f81b1b;
 }

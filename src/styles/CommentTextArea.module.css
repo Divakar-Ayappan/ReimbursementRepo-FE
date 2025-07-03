@@ -1,0 +1,25 @@
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputGroup label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    margin-top: 10px;
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+}
+
+.inputGroup textarea {
+    resize: vertical;
+    min-height: 35px;
+}
