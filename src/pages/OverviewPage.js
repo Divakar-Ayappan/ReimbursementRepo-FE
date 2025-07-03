@@ -45,7 +45,7 @@ function OverviewPage() {
 
     if (isLoading) return <p>Loading requests...</p>;
     if (error) return <p>Error loading requests</p>;
-    if (!requests || requests.length === 0) return <p>No requests available</p>;
+    if (requests) console.log(requests);
 
     const handleFormSubmit = async (formData, formOpeningMode) => {
         try {
@@ -75,9 +75,17 @@ function OverviewPage() {
                        formDataProps={formDataProps} formOpeningMode={formOpeningMode}
                        setFormOpeningMode={setFormOpeningMode}>
             <div className={styles.overViewPage}>
-                {requests.map(request => (
-                    <DisplayCard key={request.requestId} request={request} onClick={()=>setSelectedRequest(request)}/>
-                ))}
+                {(!requests || requests.length === 0) ? (
+                    <p>No requests available</p>
+                ) : (
+                    requests.map(request => (
+                        <DisplayCard
+                            key={request.requestId}
+                            request={request}
+                            onClick={() => setSelectedRequest(request)}
+                        />
+                    ))
+                )}
             </div>
             <RDetailsModal
                 isOpen={selectedRequest}
