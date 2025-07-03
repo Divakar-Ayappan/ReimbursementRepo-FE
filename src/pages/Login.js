@@ -28,10 +28,10 @@ const Login = () => {
         setEmailError("");
         setPasswordError("");
 
-        if (!email.endsWith("@divum.in")) {
-            setEmailError("Please enter a valid email ending with @divum.in");
-            isValid = false;
-        }
+        // if (!email.endsWith("@divum.in")) {
+        //     setEmailError("Please enter a valid email ending with @divum.in");
+        //     isValid = false;
+        // }
 
         if (password === "") {
             setPasswordError("Password is required");
