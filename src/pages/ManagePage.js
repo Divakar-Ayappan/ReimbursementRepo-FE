@@ -1,30 +1,26 @@
 import React, {useState} from 'react';
 import {useQuery} from "@tanstack/react-query";
-import {getAllRequestsByEmployee, getRequestsForActioner, rejectRequest} from "../api/requestApis";
+import {getRequestsForActioner} from "../api/requestApis";
 import {toast} from "react-toastify";
 import styles from "../styles/OverviewPage.module.css";
 import DisplayCard from "../componenets/common/DisplayCard";
-import RDetailsModal from "../modals/RDetailsModal";
 import RejectRequestModal from "../modals/RejectRequestModal";
+import ReimbursementDetailsCard from "../componenets/common/ReimbursementDetailsCard";
+import RModal from "../modals/RModal";
+import {useLocation, useOutletContext} from "react-router-dom";
 
 function ManagePage() {
 
+    const {isRDetailsCardOpen, setIsRDetailsCardOpen} = useOutletContext();
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
-    const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+    console.log(useLocation().pathname);
 
     const {data: requests, isLoading, error} = useQuery({
         queryKey: ['requestsForActioner'],
         queryFn: () => getRequestsForActioner(),
-        onError: () => toast.error('Failed to load equests'),
+        onError: () => toast.error('Failed to load requests'),
     });
-
-
-    const handleApproveRequest = async (requestId)=> {
-        // await
-    }
-
-
 
     return (
         <>
@@ -36,18 +32,17 @@ function ManagePage() {
                         <DisplayCard
                             key={request.requestId}
                             request={request}
-                            onClick={() => {setSelectedRequest(request); setIsDetailsModalOpen(true);}}
+                            onClick={() => {setSelectedRequest(request); setIsRDetailsCardOpen(true);}}
                         />
                     ))
                 )}
             </div>
 
-            <RDetailsModal
-                isOpen={isDetailsModalOpen}
-                rDetailsCardClose={() => {setIsDetailsModalOpen(false); setSelectedRequest(null);}}
-                request={selectedRequest}
-                handleRejectRequest={()=> setIsRejectModalOpen(true)}
-            />
+            <RModal isOpen={isRDetailsCardOpen} onClose={()=>{setIsRDetailsCardOpen(false)}}>
+                <ReimbursementDetailsCard
+                    rDetails = {selectedRequest}
+                />
+            </RModal>
 
             <RejectRequestModal
                 isOpen={isRejectModalOpen}

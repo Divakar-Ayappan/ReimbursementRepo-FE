@@ -9,7 +9,9 @@ function MainLayout() {
 
     const [rFormOpeningMode, setRFormOpeningMode] = useState('');
 
-    const outletContext = { isRFormOpen, setIsRFormOpen, rFormOpeningMode, setRFormOpeningMode };
+    const [isRDetailsCardOpen, setIsRDetailsCardOpen] = useState(false)
+
+    const outletContext = { isRFormOpen, setIsRFormOpen, rFormOpeningMode, setRFormOpeningMode, isRDetailsCardOpen, setIsRDetailsCardOpen };
 
     return (
         <div className={style.mainlayout}>

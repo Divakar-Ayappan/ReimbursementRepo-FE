@@ -17,10 +17,9 @@ import ReimbursementForm from "../componenets/common/ReimbursementForm";
 import ReimbursementDetailsCard from "../componenets/common/ReimbursementDetailsCard";
 
 function OverviewPage() {
-    const {isRFormOpen, setIsRFormOpen, setRFormOpeningMode} = useOutletContext();
+    const {isRFormOpen, setIsRFormOpen, setRFormOpeningMode,isRDetailsCardOpen, setIsRDetailsCardOpen} = useOutletContext();
     const queryClient = useQueryClient();
     const [selectedRequest, setSelectedRequest] = useState(null);
-    const [isRDetailsCardOpen, setIsRDetailsCardOpen] = useState(false)
 
 
     const {data: requests, isLoading, error} = useQuery({
