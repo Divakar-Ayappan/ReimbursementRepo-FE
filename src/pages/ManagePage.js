@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {useQuery} from "@tanstack/react-query";
-import {approveRequest, getRequestsForActioner} from "../api/requestApis";
+import {approveRequest, getRequestsForActioner, rejectRequest} from "../api/requestApis";
 import {toast} from "react-toastify";
 import styles from "../styles/OverviewPage.module.css";
 import DisplayCard from "../componenets/common/DisplayCard";
-import RejectRequestModal from "../modals/RejectRequestModal";
 import ReimbursementDetailsCard from "../componenets/common/ReimbursementDetailsCard";
 import RModal from "../modals/RModal";
 import {useOutletContext} from "react-router-dom";
+import RejectForm from "../componenets/common/RejectForm";
 
 function ManagePage() {
+
 
     const {isRDetailsCardOpen, setIsRDetailsCardOpen} = useOutletContext();
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -27,8 +28,15 @@ function ManagePage() {
         setIsRDetailsCardOpen(false);
     }
 
+    const handleRejectRequest = async (rejectionData) => {
+        await rejectRequest(selectedRequest.requestId, rejectionData);
+        toast.success('Request rejected successfully!')
+        setIsRDetailsCardOpen(false);
+        setIsRejectModalOpen(false);
+    }
+
     if(isLoading) return <div>Loading request please wait...</div>
-    if(error) return <div> Somethig went wrong!</div>
+    if(error) return <div> Something went wrong!</div>
 
     return (
         <>
@@ -50,14 +58,13 @@ function ManagePage() {
                 <ReimbursementDetailsCard
                     rDetails = {selectedRequest}
                     handleAcceptRequest = {handleAcceptRequest}
+                    handleRejectButtonClick = {()=> setIsRejectModalOpen(true)}
                 />
             </RModal>
 
-            <RejectRequestModal
-                isOpen={isRejectModalOpen}
-                rejectRequestModalClose = {() =>{setIsRejectModalOpen(false);}}
-                rDetails={selectedRequest}
-            />
+            <RModal isOpen={isRejectModalOpen} onClose={()=> setIsRejectModalOpen(false)}>
+                <RejectForm handleRejectRequest={handleRejectRequest}/>
+            </RModal>
         </>
     );
 }

@@ -7,7 +7,7 @@ import MultiItemsCard from "./MultiItemsCard";
 import {USER_DETAILS_NAME} from "../../commons/Constants";
 import {useLocation} from "react-router-dom";
 
-function ReimbursementDetailsCard({rDetails, handleEditRequest, handleCancelRequest, handleAcceptRequest, handleRejectRequest}) {
+function ReimbursementDetailsCard({rDetails, handleEditRequest, handleCancelRequest, handleAcceptRequest, handleRejectButtonClick}) {
     const userDetails = JSON.parse(sessionStorage.getItem(USER_DETAILS_NAME));
     const role = userDetails?.role;
 
@@ -100,7 +100,7 @@ function ReimbursementDetailsCard({rDetails, handleEditRequest, handleCancelRequ
             {currentPage === 'manage' &&
                 <div className={styles.rDetailsCardBottomSection}>
                     <button onClick={()=> {handleAcceptRequest()}} type="submit" className={styles.rDetailsCardApproveRequestButton}>Approve Request</button>
-                    <button onClick={()=> {handleRejectRequest(rDetails.requestId);} } type="submit" className={styles.rDetailsCardRejectRequestButton}>Reject Request</button>
+                    <button onClick={()=> {handleRejectButtonClick()} } type="submit" className={styles.rDetailsCardRejectRequestButton}>Reject Request</button>
                 </div>
             }
         </div>
