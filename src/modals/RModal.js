@@ -1,24 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import styles from '../styles/RModal.module.css'
 import {X} from "lucide-react";
 
 export default function RModal({isOpen, onClose, children}) {
-    const [isModalOpen, setIsModalOpen] = useState(isOpen);
-
-    useEffect(() => {
-        setIsModalOpen(isOpen)
-    }, [isOpen])
-
-    console.log("Modal state is: ", isOpen);
-    console.log("Internal Modal state is: ", isModalOpen);
-    if (!isModalOpen) return null
-
-    const handleClose = onClose ?? (() => setIsModalOpen(false));
+    if (!isOpen) return null
 
     return (
-        <div className={styles.modalOverlay} onClick= {handleClose}>
+        <div className={styles.modalOverlay} onClick= {onClose}>
             <div className={styles.modalContent} onClick={(e)=> e.stopPropagation()}>
-                <button className={styles.closeButton} onClick= {handleClose}>
+                <button className={styles.closeButton} onClick= {onClose}>
                     <X/>
                 </button>
                 {children}

@@ -11,9 +11,10 @@ import {
     getAllRules
 } from "../api/requestApis";
 import {toast} from "react-toastify";
-import PageWithModal from "../modals/PageWithModal";
 import {useState} from "react";
-import RDetailsModal from "../modals/RDetailsModal";
+import RModal from "../modals/RModal";
+import ReimbursementForm from "../componenets/common/ReimbursementForm";
+import ReimbursementDetailsCard from "../componenets/common/ReimbursementDetailsCard";
 
 function OverviewPage() {
     const {isRFormOpen, setIsRFormOpen} = useOutletContext();
@@ -49,7 +50,7 @@ function OverviewPage() {
 
     const handleFormSubmit = async (formData, formOpeningMode) => {
         try {
-            if(formOpeningMode === 'EDIT') {
+            if (formOpeningMode === 'EDIT') {
                 await editReimbursementRequest(selectedRequest.requestId, formData);
             } else {
                 await createReimbursementRequest(formData);
@@ -68,12 +69,10 @@ function OverviewPage() {
         toast.success("Request cancelled successfully!")
     }
 
+    console.log("IsRform open: ", isRFormOpen);
 
     return (
-        <PageWithModal isRFormOpen={isRFormOpen} setIsRFormOpen={setIsRFormOpen}
-                       onSubmit={handleFormSubmit} rules={rules} employees={employees}
-                       formDataProps={formDataProps} formOpeningMode={formOpeningMode}
-                       setFormOpeningMode={setFormOpeningMode}>
+        <>
             <div className={styles.overViewPage}>
                 {(!requests || requests.length === 0) ? (
                     <p>No requests available</p>
@@ -87,16 +86,38 @@ function OverviewPage() {
                     ))
                 )}
             </div>
-            <RDetailsModal
-                isOpen={selectedRequest}
-                rDetailsCardClose={() => setSelectedRequest(null)}
-                request={selectedRequest}
-                setIsRFormOpen={setIsRFormOpen}
-                setFormDataProps={setFormDataProps}
-                setFormOpeningMode={setFormOpeningMode}
-                handleCancelRequest={handleCancelRequest}
-            />
-        </PageWithModal>
+            <RModal isOpen={isRFormOpen} onClose={()=>setIsRFormOpen(false)}>
+                <ReimbursementForm onSubmit={handleFormSubmit}
+                                   setIsRFormOpen={setIsRFormOpen}
+                                   rules={rules}
+                                   employees={employees}
+                                   formDataProps={formDataProps}
+                                   formOpeningMode={formOpeningMode}
+                />
+            </RModal>
+
+            <RModal isOpen={selectedRequest} onClose={()=> setSelectedRequest(null)}>
+                <ReimbursementDetailsCard
+                    setIsRFormOpen={setIsRFormOpen}
+                    rDetails={selectedRequest}
+                    setFormDataProps={setFormDataProps}
+                    rDetailsCardClose={()=>setSelectedRequest(null)}
+                    setFormOpeningMode={setFormOpeningMode}
+                    handleCancelRequest={handleCancelRequest}
+                    setSelectedRequest={setSelectedRequest}
+                />
+            </RModal>
+            {/*<RDetailsModal*/}
+            {/*    isOpen={selectedRequest}*/}
+            {/*    rDetailsCardClose={() => setSelectedRequest(null)}*/}
+            {/*    request={selectedRequest}*/}
+            {/*    setIsRFormOpen={setIsRFormOpen}*/}
+            {/*    setFormDataProps={setFormDataProps}*/}
+            {/*    setFormOpeningMode={setFormOpeningMode}*/}
+            {/*    handleCancelRequest={handleCancelRequest}*/}
+            {/*/>*/}
+
+        </>
     );
 }
 

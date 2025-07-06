@@ -6,7 +6,7 @@ import React from "react";
 import MultiItemsCard from "./MultiItemsCard";
 import {USER_DETAILS_NAME} from "../../commons/Constants";
 
-function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, rDetailsCardClose, setFormOpeningMode, handleCancelRequest, handleRejectRequest}) {
+function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, rDetailsCardClose, setFormOpeningMode, handleCancelRequest, handleRejectRequest, setSelectedRequest}) {
 
     const userDetails = JSON.parse(sessionStorage.getItem(USER_DETAILS_NAME));
     const role = userDetails?.role;
@@ -89,7 +89,7 @@ function ReimbursementDetailsCard({setIsRFormOpen, rDetails, setFormDataProps, r
 
             {role === 'EMPLOYEE' &&
                 <div className={styles.rDetailsCardBottomSection}>
-                    <button onClick={()=> {setIsRFormOpen(true); setFormDataProps(rDetails); setFormOpeningMode('EDIT')}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
+                    <button onClick={()=> {setIsRFormOpen(true); setFormDataProps(rDetails); setSelectedRequest(null); setFormOpeningMode('EDIT')}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
                     <button onClick={()=> {handleCancelRequest(rDetails.requestId); rDetailsCardClose(); } } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
                 </div>
             }
