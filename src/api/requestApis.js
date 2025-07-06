@@ -24,5 +24,8 @@ export const loginUser = (loginRequest) =>
 export const getRequestsForActioner = (params = {}) =>
     http.get('/request/actioner', {params})
 
+export const approveRequest = (id, actionRequest) =>
+    http.post(`/request/actions/${id}`, actionRequest)
+
 export const rejectRequest = (requestId, actionData) =>
     http.post(`request/actions/${requestId}`, actionData)
