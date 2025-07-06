@@ -17,10 +17,10 @@ import ReimbursementForm from "../componenets/common/ReimbursementForm";
 import ReimbursementDetailsCard from "../componenets/common/ReimbursementDetailsCard";
 
 function OverviewPage() {
-    const {isRFormOpen, setIsRFormOpen} = useOutletContext();
+    const {isRFormOpen, setIsRFormOpen, setRFormOpeningMode} = useOutletContext();
     const queryClient = useQueryClient();
     const [selectedRequest, setSelectedRequest] = useState(null);
-    const [formDataProps, setFormDataProps] = useState(null);
+    const [isRDetailsCardOpen, setIsRDetailsCardOpen] = useState(false)
 
 
     const {data: requests, isLoading, error} = useQuery({
@@ -62,13 +62,17 @@ function OverviewPage() {
         }
     };
 
+    const handleEditRequest = () => {
+        setIsRDetailsCardOpen(false)
+        setRFormOpeningMode('EDIT')
+        setIsRFormOpen(true);
+    }
+
     const handleCancelRequest = async (requestId) => {
         await cancelRequest(requestId);
         setSelectedRequest(null);
         toast.success("Request cancelled successfully!")
     }
-
-    console.log("IsRform open: ", isRFormOpen);
 
     return (
         <>
@@ -80,7 +84,7 @@ function OverviewPage() {
                         <DisplayCard
                             key={request.requestId}
                             request={request}
-                            onClick={() => setSelectedRequest(request)}
+                            onClick={() => {setSelectedRequest(request); setIsRDetailsCardOpen(true)}}
                         />
                     ))
                 )}
@@ -89,17 +93,15 @@ function OverviewPage() {
                 <ReimbursementForm onSubmit={handleFormSubmit}
                                    rules={rules}
                                    employees={employees}
-                                   formDataProps={formDataProps}
+                                   formDataProps={selectedRequest}
                 />
             </RModal>
 
-            <RModal isOpen={selectedRequest} onClose={()=> setSelectedRequest(null)}>
+            <RModal isOpen={isRDetailsCardOpen} onClose={()=>{setIsRDetailsCardOpen(false)}}>
                 <ReimbursementDetailsCard
-                    rDetails={selectedRequest}
-                    setFormDataProps={setFormDataProps}
-                    rDetailsCardClose={()=>setSelectedRequest(null)}
+                    rDetails = {selectedRequest}
+                    handleEditRequest={handleEditRequest}
                     handleCancelRequest={handleCancelRequest}
-                    setSelectedRequest={setSelectedRequest}
                 />
             </RModal>
         </>

@@ -7,9 +7,7 @@ import MultiItemsCard from "./MultiItemsCard";
 import {USER_DETAILS_NAME} from "../../commons/Constants";
 import {useOutletContext} from "react-router-dom";
 
-function ReimbursementDetailsCard({rDetails, setFormDataProps, rDetailsCardClose, handleCancelRequest, handleRejectRequest, setSelectedRequest}) {
-
-    const{setIsRFormOpen, setRFormOpeningMode} = useOutletContext();
+function ReimbursementDetailsCard({rDetails, handleCancelRequest, handleRejectRequest, handleEditRequest}) {
     const userDetails = JSON.parse(sessionStorage.getItem(USER_DETAILS_NAME));
     const role = userDetails?.role;
 
@@ -91,14 +89,14 @@ function ReimbursementDetailsCard({rDetails, setFormDataProps, rDetailsCardClose
 
             {role === 'EMPLOYEE' &&
                 <div className={styles.rDetailsCardBottomSection}>
-                    <button onClick={()=> {setIsRFormOpen(true); setFormDataProps(rDetails); setSelectedRequest(null); setRFormOpeningMode('EDIT')}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
-                    <button onClick={()=> {handleCancelRequest(rDetails.requestId); rDetailsCardClose(); } } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
+                    <button onClick={()=> {handleEditRequest()}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
+                    <button onClick={()=> {handleCancelRequest(rDetails.requestId);} } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
                 </div>
             }
 
             {role !== 'EMPLOYEE' &&
                 <div className={styles.rDetailsCardBottomSection}>
-                    <button onClick={()=> {rDetailsCardClose();}} type="submit" className={styles.rDetailsCardApproveRequestButton}>Approve Request</button>
+                    <button onClick={()=> {}} type="submit" className={styles.rDetailsCardApproveRequestButton}>Approve Request</button>
                     <button onClick={()=> {handleRejectRequest(rDetails.requestId);} } type="submit" className={styles.rDetailsCardRejectRequestButton}>Reject Request</button>
                 </div>
             }
