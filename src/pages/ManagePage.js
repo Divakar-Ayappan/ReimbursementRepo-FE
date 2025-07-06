@@ -18,7 +18,7 @@ function ManagePage() {
 
     const {data: requests, isLoading, error} = useQuery({
         queryKey: ['requestsForActioner'],
-        queryFn: () => getRequestsForActioner(),
+        queryFn: () => getRequestsForActioner({filter: 'PENDING'}),
         onError: () => toast.error('Failed to load requests'),
     });
 
