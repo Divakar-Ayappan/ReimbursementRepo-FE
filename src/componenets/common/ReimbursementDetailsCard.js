@@ -5,11 +5,14 @@ import {convertISOToLongDate, convertISOToSmallDate} from "../../utils/Utils.js"
 import React from "react";
 import MultiItemsCard from "./MultiItemsCard";
 import {USER_DETAILS_NAME} from "../../commons/Constants";
-import {useOutletContext} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 function ReimbursementDetailsCard({rDetails, handleCancelRequest, handleRejectRequest, handleEditRequest}) {
     const userDetails = JSON.parse(sessionStorage.getItem(USER_DETAILS_NAME));
     const role = userDetails?.role;
+
+    const currentPage = useLocation().pathname.slice(1);
+
 
     return (
         <div className={styles.rDetailsCard}>
@@ -87,14 +90,14 @@ function ReimbursementDetailsCard({rDetails, handleCancelRequest, handleRejectRe
                 <div className={styles.rDetailsCardCreatedAtDate}> {convertISOToLongDate(rDetails.createdAt)} </div>
             </div>
 
-            {role === 'EMPLOYEE' &&
+            {currentPage === 'overview' &&
                 <div className={styles.rDetailsCardBottomSection}>
                     <button onClick={()=> {handleEditRequest()}} type="submit" className={styles.rDetailsCardEditRequestButton}>Edit Request</button>
                     <button onClick={()=> {handleCancelRequest(rDetails.requestId);} } type="submit" className={styles.rDetailsCardCancelRequestButton}>Cancel Request</button>
                 </div>
             }
 
-            {role !== 'EMPLOYEE' &&
+            {currentPage === 'manage' &&
                 <div className={styles.rDetailsCardBottomSection}>
                     <button onClick={()=> {}} type="submit" className={styles.rDetailsCardApproveRequestButton}>Approve Request</button>
                     <button onClick={()=> {handleRejectRequest(rDetails.requestId);} } type="submit" className={styles.rDetailsCardRejectRequestButton}>Reject Request</button>
