@@ -10,7 +10,7 @@ function DisplayCard({request, onClick}) {
     return (
         <div onClick={onClick} className={styles.card}>
             <div className={styles.card_topSection}>
-                <div className={styles.card_topSection_categoryText}> Category</div>
+                <div className={styles.card_topSection_categoryText}> {request.ruleCategory} </div>
                 <StatusBadge status={request.status}/>
             </div>
             <div className={styles.card_dateSection}>
