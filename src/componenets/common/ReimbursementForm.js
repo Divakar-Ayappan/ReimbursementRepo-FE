@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from '../../styles/ReimbursementForm.module.css';
 import {convertISOToSmallDate} from "../../utils/Utils.js";
 import CommentTextArea from "./CommentTextArea";
+import {useOutletContext} from "react-router-dom";
 
 const initialFormData = {
     employeeId: '8eb8f758-d146-4098-9524-a0a7d53b5024',
@@ -15,12 +16,13 @@ const initialFormData = {
     employees: []
 };
 
-export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, employees, formDataProps, formOpeningMode}) {
+export default function ReimbursementForm({onSubmit, rules, employees, formDataProps}) {
 
     const [formData, setFormData] = useState(initialFormData);
+    const {rFormOpeningMode, setIsRFormOpen} = useOutletContext();
 
     useEffect(() => {
-        if (formOpeningMode === 'EDIT' && formDataProps) {
+        if (rFormOpeningMode === 'EDIT' && formDataProps) {
             setFormData({
                 employeeId: formData.employeeId || '',
                 fromDate: formDataProps.fromDate || '',
@@ -35,7 +37,7 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
         } else {
             setFormData(initialFormData);
         }
-    }, [formData.employeeId, formDataProps, formOpeningMode]);
+    }, [formData.employeeId, formDataProps, rFormOpeningMode]);
 
     // Handle change for normal inputs
     const handleChange = (e) => {
@@ -65,13 +67,13 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit( formData, formOpeningMode);
+        onSubmit( formData, rFormOpeningMode);
     };
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
 
-            {formOpeningMode === 'EDIT'
+            {rFormOpeningMode === 'EDIT'
                 ? <h2 className={styles.title}>Edit Reimbursement Request</h2>
                 : <h2 className={styles.title}>New Reimbursement Request</h2>}
 
@@ -229,7 +231,7 @@ export default function ReimbursementForm({onSubmit, setIsRFormOpen, rules, empl
                     Cancel
                 </button>
                 {
-                    formOpeningMode === 'EDIT'
+                    rFormOpeningMode === 'EDIT'
                         ? <button type="submit" className={styles.submitButton}>
                             Edit Request
                         </button>

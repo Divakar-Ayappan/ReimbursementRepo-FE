@@ -21,7 +21,6 @@ function OverviewPage() {
     const queryClient = useQueryClient();
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [formDataProps, setFormDataProps] = useState(null);
-    const [formOpeningMode, setFormOpeningMode] = useState('');
 
 
     const {data: requests, isLoading, error} = useQuery({
@@ -88,35 +87,21 @@ function OverviewPage() {
             </div>
             <RModal isOpen={isRFormOpen} onClose={()=>setIsRFormOpen(false)}>
                 <ReimbursementForm onSubmit={handleFormSubmit}
-                                   setIsRFormOpen={setIsRFormOpen}
                                    rules={rules}
                                    employees={employees}
                                    formDataProps={formDataProps}
-                                   formOpeningMode={formOpeningMode}
                 />
             </RModal>
 
             <RModal isOpen={selectedRequest} onClose={()=> setSelectedRequest(null)}>
                 <ReimbursementDetailsCard
-                    setIsRFormOpen={setIsRFormOpen}
                     rDetails={selectedRequest}
                     setFormDataProps={setFormDataProps}
                     rDetailsCardClose={()=>setSelectedRequest(null)}
-                    setFormOpeningMode={setFormOpeningMode}
                     handleCancelRequest={handleCancelRequest}
                     setSelectedRequest={setSelectedRequest}
                 />
             </RModal>
-            {/*<RDetailsModal*/}
-            {/*    isOpen={selectedRequest}*/}
-            {/*    rDetailsCardClose={() => setSelectedRequest(null)}*/}
-            {/*    request={selectedRequest}*/}
-            {/*    setIsRFormOpen={setIsRFormOpen}*/}
-            {/*    setFormDataProps={setFormDataProps}*/}
-            {/*    setFormOpeningMode={setFormOpeningMode}*/}
-            {/*    handleCancelRequest={handleCancelRequest}*/}
-            {/*/>*/}
-
         </>
     );
 }
